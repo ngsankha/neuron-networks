@@ -14,6 +14,7 @@ with open('cluster.txt') as csv_file:
 
 logging.info("Read clusters")
 
+written = set()
 with open('data.tsv') as src:
     reader = csv.reader(src, delimiter='\t')
     with open('output.tsv', 'w') as dst:
@@ -28,9 +29,10 @@ with open('data.tsv') as src:
                 history[rhs] = node_id
                 node_id += 1
 
-            if history[lhs] == history[rhs]:
+            if history[lhs] == history[rhs] or "{} {}".format(history[lhs], history[rhs]) in written:
                 continue
             else:
+                written.add("{} {}".format(history[lhs], history[rhs]))
                 writer.writerow([history[lhs], history[rhs]])
 
 logging.info("wrote reduced graph")
