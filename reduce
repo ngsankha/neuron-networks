@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DATASET=CC-Neuron_cci.tsv
+# DATASET=graph-3.tsv
+BIN=./SPICi/src/spici
+
+for i in {0..3}; do
+	echo "Running SPICi clustering: $i"
+	# rm data.tsv cluster.txt output.tsv
+	sed 's/$/	1/' $DATASET > data.tsv
+	$BIN -i data.tsv -o cluster.txt
+	python3 cluster.py
+	mv "output.tsv" "graph-$i.tsv"
+	DATASET=graph-$i.tsv
+done

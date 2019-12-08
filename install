@@ -1,0 +1,16 @@
+#!/bin/bash
+
+BIN=./SPICi/src/spici
+DATASET=CC-Neuron_cci.tsv
+
+if [[ ! -f "$BIN" ]]; then
+  wget "https://compbio.cs.princeton.edu/spici/files/SPICi.tar.gz" -O SPICi.tar.gz
+  tar zxvf SPICi.tar.gz
+  cd SPICi; ./configure
+  cd SPICi; make
+fi
+
+if [[ ! -f "$DATASET" ]]; then
+  wget "http://snap.stanford.edu/biodata/datasets/10023/files/CC-Neuron_cci.tsv.gz" -O CC-Neuron_cci.tsv.gz
+  gunzip $DATASET.gz
+fi
